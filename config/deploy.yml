@@ -1,11 +1,9 @@
-<% secrets = Kamal::Secrets.new(destination: ENV["KAMAL_DESTINATION"]) %>
-
 service: bank-frontend
 image: <%= ENV.fetch("KAMAL_IMAGE") %>
 
 servers:
   web:
-    - <%= secrets["KAMAL_SERVER_IP"] %>
+    - <%= ENV.fetch("KAMAL_SERVER_IP") %>
 
 proxy:
   host: <%= ENV.fetch("KAMAL_HOST") %>
@@ -25,6 +23,7 @@ builder:
     VITE_API_BASE_URL: <%= ENV.fetch("VITE_API_BASE_URL") %>
 
 ssh:
-  user: <%= ENV.fetch("KAMAL_SSH_USER", "root") %>
+  user:
+    - KAMAL_SSH_USER
   key_data:
     - KAMAL_SSH_PRIVATE_KEY
