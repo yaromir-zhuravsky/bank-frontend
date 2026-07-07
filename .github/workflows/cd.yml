@@ -25,16 +25,17 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
+          ruby-version: "3.4.4"
 
       - name: Deploy
         run: bundle exec kamal deploy
         env:
+          KAMAL_REGISTRY_USERNAME: ${{ secrets.KAMAL_REGISTRY_USERNAME }}
+          KAMAL_REGISTRY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
           KAMAL_HOST: ${{ vars.KAMAL_HOST }}
           KAMAL_IMAGE: ${{ vars.KAMAL_IMAGE }}
           KAMAL_REGISTRY_SERVER: ${{ vars.KAMAL_REGISTRY_SERVER || 'ghcr.io' }}
-          KAMAL_REGISTRY_USERNAME: ${{ secrets.KAMAL_REGISTRY_USERNAME }}
-          KAMAL_REGISTRY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
-          KAMAL_SERVER_IP: ${{ secrets.KAMAL_SERVER_IP }}
+          KAMAL_SERVER_IP: ${{ vars.KAMAL_SERVER_IP }}
           KAMAL_SSH_PRIVATE_KEY: ${{ secrets.KAMAL_SSH_PRIVATE_KEY }}
           KAMAL_SSH_USER: ${{ vars.KAMAL_SSH_USER || 'root' }}
           VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}

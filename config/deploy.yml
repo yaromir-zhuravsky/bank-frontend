@@ -23,7 +23,6 @@ builder:
     VITE_API_BASE_URL: <%= ENV.fetch("VITE_API_BASE_URL") %>
 
 ssh:
-  user:
-    - KAMAL_SSH_USER
+  user: <%= ENV.fetch("KAMAL_SSH_USER") %>
   key_data:
     - KAMAL_SSH_PRIVATE_KEY
