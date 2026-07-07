@@ -1,6 +1,4 @@
-import { authTokenStorage, type AuthTokens } from './authTokenStorage'
-
-const apiBaseUrl = 'http://localhost:3000'
+import { authTokenStorage, type AuthTokens } from './auth'
 
 let refreshRequest: Promise<AuthTokens> | null = null
 
@@ -50,7 +48,7 @@ async function requestRefreshTokens() {
     throw new Error('Refresh token is missing')
   }
 
-  const response = await fetch(`${apiBaseUrl}/authentication/refresh`, {
+  const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/authentication/refresh`, {
     method: 'POST',
     cache: 'no-store',
     headers: {

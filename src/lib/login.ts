@@ -4,7 +4,7 @@ type LoginCredentials = {
 }
 
 export function login({ email, password }: LoginCredentials) {
-  return fetch('http://localhost:3000/authentication/login', {
+  return fetch(`${import.meta.env.VITE_API_BASE_URL}/authentication/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

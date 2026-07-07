@@ -1,6 +1,16 @@
 import { redirect, type ActionFunctionArgs } from 'react-router'
-import { login } from '../../../features/auth/login'
-import { authTokenStorage } from '../../../shared/api'
+import { LoginForm } from '../components/LoginForm'
+import { login } from '../lib/login'
+import { authTokenStorage } from '../lib/auth'
+
+export function LoginPage() {
+  return (
+    <main>
+      <h1>Login</h1>
+      <LoginForm />
+    </main>
+  )
+}
 
 export async function loginAction({ request }: ActionFunctionArgs) {
   const formData = await request.formData()

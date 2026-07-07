@@ -1,9 +1,10 @@
-import { apiFetch, authTokenStorage } from '../../../../shared/api'
+import { apiFetch } from './api'
+import { authTokenStorage } from './auth'
 
 export function logout() {
   const refreshToken = authTokenStorage.getRefreshToken()
 
-  return apiFetch('http://localhost:3000/authentication/logout', {
+  return apiFetch(`${import.meta.env.VITE_API_BASE_URL}/authentication/logout`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -11,7 +12,7 @@ export function logout() {
     body: JSON.stringify({
       authentication: {
         refresh_token: refreshToken,
-      }
+      },
     }),
   })
 }
