@@ -1,0 +1,35 @@
+name: CD
+
+on:
+  push:
+    branches: [ main ]
+
+concurrency:
+  group: production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Deploy
+        run: bundle exec kamal deploy
+        env:
+          KAMAL_HOST: ${{ vars.KAMAL_HOST }}
+          KAMAL_IMAGE: ${{ vars.KAMAL_IMAGE }}
+          KAMAL_REGISTRY_SERVER: ${{ vars.KAMAL_REGISTRY_SERVER || 'ghcr.io' }}
+          KAMAL_REGISTRY_USERNAME: ${{ secrets.KAMAL_REGISTRY_USERNAME }}
+          KAMAL_REGISTRY_PASSWORD: ${{ secrets.KAMAL_REGISTRY_PASSWORD }}
+          KAMAL_SERVER_IP: ${{ secrets.KAMAL_SERVER_IP }}
+          KAMAL_SSH_PRIVATE_KEY: ${{ secrets.KAMAL_SSH_PRIVATE_KEY }}
+          KAMAL_SSH_USER: ${{ vars.KAMAL_SSH_USER || 'root' }}
+          VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
